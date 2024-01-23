@@ -12,7 +12,7 @@ public class CloseRedRight
     public static void main(String[] args) {
         // Declare a MeepMeep instance
         // With a field size of 800 pixels
-        MeepMeep meepMeep = new MeepMeep(1200);
+        MeepMeep meepMeep = new MeepMeep(800);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Required: Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
