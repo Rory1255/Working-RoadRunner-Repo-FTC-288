@@ -23,6 +23,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -36,30 +37,36 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuild
 @Autonomous(name = "movement Auto", group = "LinearOpMode")
 public class movementTest extends LinearOpMode {
 
+    private CRServo leftFeedServo = null;
+    private CRServo rightFeedServo = null;
+
     @Override
     public void runOpMode() {
+        leftFeedServo = hardwareMap.get(CRServo.class, "frontLeftIntakeServo");
+        rightFeedServo = hardwareMap.get(CRServo.class, "frontRightIntakeServo");
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        Pose2d startPose = new Pose2d(12, 60, Math.toRadians(-90));
+        TrajectorySequence test = drive.trajectorySequenceBuilder(startPose)
+                .addDisplacementMarker(()->{
+                    leftFeedServo.setPower(1.0);
+                    rightFeedServo.setPower(-1.0);
+                })
+                .forward(1)
+                .addDisplacementMarker(()->{
+                    leftFeedServo.setPower(0.0);
+                    rightFeedServo.setPower(0.0);
+                })
+                .forward(-1)
+                .waitSeconds(1.0)
+                .build();
 
-        Trajectory myTrajectory = drive.trajectoryBuilder(new Pose2d(0,0, 0))
-                .lineToConstantHeading(
-                        new Vector2d(30, 0),
-                        SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL)
-                )
-                .build();
-        Trajectory strafeLol = drive.trajectoryBuilder(myTrajectory.end().plus(new Pose2d(0, 0, Math.toRadians(90))), false)
-                .strafeRight(20)
-                .build();
 
 
         waitForStart();
 
         if(isStopRequested()) return;
 
-        drive.followTrajectory(myTrajectory);
-        drive.turn(Math.toRadians(90));
-        drive.followTrajectory(strafeLol);
-        drive.turn(Math.toRadians(-90));
+        drive.followTrajectorySequence(test);
     }
 
 }

@@ -6,6 +6,9 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -16,9 +19,34 @@ public class BlueCloseAuto extends LinearOpMode {
     private final int READ_PERIOD = 1;
 
     private HuskyLens huskyLens;
+
+    private DcMotor armExtensionFront = null;
+    private DcMotor armExtensionBack = null;
+    private DcMotor armHeightMotor = null;
+
+    private CRServo leftFeedServo = null;
+    private CRServo rightFeedServo = null;
+
+    private Servo angleServo = null;
     @Override
     public void runOpMode() {
         huskyLens = hardwareMap.get(HuskyLens.class, "huskyLens");
+
+        armExtensionFront = hardwareMap.get(DcMotor.class, "frontArmExtensionMotor");
+        armExtensionBack = hardwareMap.get(DcMotor.class, "backArmExtensionMotor");
+        armHeightMotor = hardwareMap.get(DcMotor.class, "armHeightMotor");
+
+        leftFeedServo = hardwareMap.get(CRServo.class, "frontLeftIntakeServo");
+        rightFeedServo = hardwareMap.get(CRServo.class, "frontRightIntakeServo");
+
+        angleServo = hardwareMap.get(Servo.class, "angleServo");
+
+        armExtensionFront.setDirection(DcMotor.Direction.FORWARD);
+        armExtensionBack.setDirection(DcMotor.Direction.REVERSE);
+
+        double intakeAngle = 0.4;
+        double outtakeAngle = 0.535;
+
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose = new Pose2d(12, 60, Math.toRadians(-90));
@@ -26,17 +54,53 @@ public class BlueCloseAuto extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence center = drive.trajectorySequenceBuilder(startPose)
+                .addDisplacementMarker(()->{
+                    angleServo.setPosition(intakeAngle);
+                })
                 .forward(23)
-                .waitSeconds(0.1)
-
-                .waitSeconds(1.0)
+                .addDisplacementMarker(()->{
+                    armExtensionFront.setPower(1);
+                    armExtensionBack.setPower(1);
+                })
+                .addDisplacementMarker(()->{
+                    armExtensionFront.setPower(0.0);
+                    armExtensionBack.setPower(0.0);
+                })
+                .addDisplacementMarker(()->{
+                    armHeightMotor.setPower(-0.5);
+                })
+                .addDisplacementMarker(()->{
+                    armHeightMotor.setPower(0.0);
+                })
+                .addDisplacementMarker(()->{
+                    rightFeedServo.setPower(0.3);
+                })
                 .waitSeconds(0.5)
+                .addDisplacementMarker(()->{
+                    rightFeedServo.setPower(0.0);
+                })
                 .forward(-5)
                 .turn(Math.toRadians(90))
                 .waitSeconds(0.1)
+                .addDisplacementMarker(()->{
+                    armHeightMotor.setPower(0.5);
+                })
+                .waitSeconds(0.2)
+                .addDisplacementMarker(()->{
+                    armHeightMotor.setPower(0.0);
+                })
+                .addDisplacementMarker(()->{
+                    angleServo.setPosition(outtakeAngle);
+                })
                 .splineToConstantHeading(new Vector2d(47, 33), 0)
                 .waitSeconds(0.5)
+                .addDisplacementMarker(()->{
+                    leftFeedServo.setPower(-0.3);
+                })
                 .waitSeconds(0.2)
+                .addDisplacementMarker(()->{
+                    leftFeedServo.setPower(0.0);
+                })
                 .lineToSplineHeading(new Pose2d(44, 61))
 
                 .build();

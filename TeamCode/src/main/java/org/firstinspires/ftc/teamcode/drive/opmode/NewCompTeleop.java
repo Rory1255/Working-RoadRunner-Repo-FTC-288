@@ -266,8 +266,8 @@ public class NewCompTeleop extends LinearOpMode {
             }
 
             double intakeAngle = 0.4;
-            double outtakeAngle = 0.56;
-            //TODO: imperically tune outtake angle for new setup to not burn out servo
+            double outtakeAngle = 0.535;
+
 
             if (gamepad2.x){
                 angleServo.setPosition(intakeAngle);
