@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Blue Close Auto", group = "LinearOpMode")
 public class BlueCloseAuto extends LinearOpMode {
@@ -28,6 +29,8 @@ public class BlueCloseAuto extends LinearOpMode {
     private CRServo rightFeedServo = null;
 
     private Servo angleServo = null;
+
+    private final ElapsedTime runtime = new ElapsedTime();
     @Override
     public void runOpMode() {
         huskyLens = hardwareMap.get(HuskyLens.class, "huskyLens");
@@ -47,113 +50,66 @@ public class BlueCloseAuto extends LinearOpMode {
         double intakeAngle = 0.4;
         double outtakeAngle = 0.535;
 
+        double rightFeedOuttake = 0.3;
+        double leftFeedOuttake = -0.3;
+
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Pose2d startPose = new Pose2d(12, 60, Math.toRadians(-90));
 
         drive.setPoseEstimate(startPose);
 
-        TrajectorySequence center = drive.trajectorySequenceBuilder(startPose)
-                .addDisplacementMarker(()->{
-                    angleServo.setPosition(intakeAngle);
-                })
-                .forward(23)
-                .addDisplacementMarker(()->{
-                    armExtensionFront.setPower(1);
-                    armExtensionBack.setPower(1);
-                })
-                .addDisplacementMarker(()->{
-                    armExtensionFront.setPower(0.0);
-                    armExtensionBack.setPower(0.0);
-                })
-                .addDisplacementMarker(()->{
-                    armHeightMotor.setPower(-0.5);
-                })
-                .addDisplacementMarker(()->{
-                    armHeightMotor.setPower(0.0);
-                })
-                .addDisplacementMarker(()->{
-                    rightFeedServo.setPower(0.3);
-                })
-                .waitSeconds(0.5)
-                .addDisplacementMarker(()->{
-                    rightFeedServo.setPower(0.0);
-                })
+        TrajectorySequence centerStart = drive.trajectorySequenceBuilder(startPose)
+                .forward(23.5)
+                .build();
+
+        TrajectorySequence centerBackAndBoard = drive.trajectorySequenceBuilder(centerStart.end())
                 .forward(-5)
+                .waitSeconds(0.1)
                 .turn(Math.toRadians(90))
                 .waitSeconds(0.1)
-                .addDisplacementMarker(()->{
-                    armHeightMotor.setPower(0.5);
-                })
-                .waitSeconds(0.2)
-                .addDisplacementMarker(()->{
-                    armHeightMotor.setPower(0.0);
-                })
-                .addDisplacementMarker(()->{
-                    angleServo.setPosition(outtakeAngle);
-                })
-                .splineToConstantHeading(new Vector2d(47, 33), 0)
-                .waitSeconds(0.5)
-                .addDisplacementMarker(()->{
-                    leftFeedServo.setPower(-0.3);
-                })
-                .waitSeconds(0.2)
-                .addDisplacementMarker(()->{
-                    leftFeedServo.setPower(0.0);
-                })
-                .lineToSplineHeading(new Pose2d(44, 61))
-
+                .splineToConstantHeading(new Vector2d(47.5, 32.8), 0)
                 .build();
 
-        TrajectorySequence left = drive.trajectorySequenceBuilder(startPose)
-                .waitSeconds(0.1)
-                .forward(23)
+        TrajectorySequence centerPark = drive.trajectorySequenceBuilder(centerBackAndBoard.end())
+                .lineToSplineHeading(new Pose2d(44, 61))
+                .build();
+
+
+        TrajectorySequence leftStart = drive.trajectorySequenceBuilder(startPose)
+                .forward(27)
                 .turn(Math.toRadians(90))
-                .addDisplacementMarker(()->{
-                    //Place purple pixel
-                    //Run right servo in outtake mode at very low speed
-                })
-                .waitSeconds(1.0)
-
-                .waitSeconds(0.5)
-                .lineToConstantHeading(new Vector2d(12,50))
-                .waitSeconds(0.2)
-                //assuming standard preload procedure is left side yellow, right side purple
-                .splineToConstantHeading(new Vector2d(47, 40), 0)
-                .addDisplacementMarker(()->{
-                    //score yellow pixel
-                    //run left servo in outtake mode at medium speed for 0.5 seconds
-                })
-                .waitSeconds(0.5)
-                .addDisplacementMarker(()->{
-                    //raise arm more
-                })
-                .waitSeconds(0.2)
-                .lineToSplineHeading(new Pose2d(44, 61))
-
+                .waitSeconds(0.1)
+                .forward(-1.3)
                 .build();
 
-        TrajectorySequence right = drive.trajectorySequenceBuilder(startPose)
+        TrajectorySequence leftBackAndBoard = drive.trajectorySequenceBuilder(leftStart.end())
+                .lineToConstantHeading(new Vector2d(12,55))
                 .waitSeconds(0.1)
+                .splineToConstantHeading(new Vector2d(47.5, 40), 0)
+                .build();
+
+        TrajectorySequence leftPark = drive.trajectorySequenceBuilder(leftBackAndBoard.end())
+                .lineToSplineHeading(new Pose2d(44, 61))
+                .build();
+
+
+        TrajectorySequence rightStart = drive.trajectorySequenceBuilder(startPose)
                 .forward(23)
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(-58))
-                .waitSeconds(1.0)
-                .waitSeconds(0.5)
+                .build();
+
+        TrajectorySequence rightBackAndBoard = drive.trajectorySequenceBuilder(rightStart.end())
                 .lineToConstantHeading(new Vector2d(13,46))
                 .waitSeconds(0.2)
                 .turn(Math.toRadians(148))
+                .waitSeconds(0.1)
+                .splineToConstantHeading(new Vector2d(47.5, 27), 0)
+                .build();
 
-                //assuming standard preload procedure is left side yellow, right side purple
-                .splineToConstantHeading(new Vector2d(47, 27), 0)
-
-                .waitSeconds(0.5)
-                .addDisplacementMarker(()->{
-                    //raise arm more
-                })
-                .waitSeconds(0.2)
+        TrajectorySequence rightPark = drive.trajectorySequenceBuilder(rightBackAndBoard.end())
                 .lineToSplineHeading(new Pose2d(44, 61))
-
                 .build();
 
 
@@ -161,26 +117,179 @@ public class BlueCloseAuto extends LinearOpMode {
         waitForStart();
 
         int duckPos = 0;
+        int duckID = 0;
+        int duckHeight = 0;
         HuskyLens.Block[] blocks = huskyLens.blocks();
         telemetry.addData("Block count", blocks.length);
         for (int i = 0; i < blocks.length; i++) {
             telemetry.addData("Block", blocks[i].toString());
             int thisColorID = blocks[i].id;// save the current recognition's Color ID
             duckPos = blocks[i].x;
+            duckID = blocks[i].id;
+            duckHeight = blocks[i].y;
             telemetry.addData("This Color ID", thisColorID);     // display that Color ID
 
         }
 
         if(isStopRequested()) return;
 
-        if (duckPos < 100 && duckPos >0){
-            drive.followTrajectorySequence(left);
+        if (duckPos < 100 && duckPos >0 && duckID == 2 && duckHeight < 70){
+            angleServo.setPosition(intakeAngle);
+
+            armExtensionFront.setPower(0.5);
+            armExtensionBack.setPower(0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.3)) {}
+
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+            armHeightMotor.setPower(-0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.4)) {}
+
+            armHeightMotor.setPower(0.0);
+            drive.followTrajectorySequence(leftStart);
+
+            rightFeedServo.setPower(rightFeedOuttake);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+
+            rightFeedServo.setPower(0.0);
+            armHeightMotor.setPower(0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.4)) {}
+
+            armHeightMotor.setPower(0.0);
+            angleServo.setPosition(outtakeAngle);
+
+            drive.followTrajectorySequence(leftBackAndBoard);
+
+            armExtensionBack.setPower(0.5);
+            armExtensionFront.setPower(0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+            leftFeedServo.setPower(leftFeedOuttake);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+            leftFeedServo.setPower(0.0);
+
+            armExtensionBack.setPower(-0.5);
+            armExtensionFront.setPower(-0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+
+            drive.followTrajectorySequence(leftPark);
         }
-        if (duckPos > 100 && duckPos < 210){
-            drive.followTrajectorySequence(center);
+        if (duckPos > 100 && duckPos < 210 && duckID == 2 && duckHeight < 70){
+
+            angleServo.setPosition(intakeAngle);
+
+            armExtensionFront.setPower(0.5);
+            armExtensionBack.setPower(0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.3)) {}
+
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+            armHeightMotor.setPower(-0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.4)) {}
+
+            armHeightMotor.setPower(0.0);
+            drive.followTrajectorySequence(centerStart);
+
+            rightFeedServo.setPower(rightFeedOuttake);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+
+            rightFeedServo.setPower(0.0);
+            armHeightMotor.setPower(0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.4)) {}
+
+            armHeightMotor.setPower(0.0);
+            angleServo.setPosition(outtakeAngle);
+
+            drive.followTrajectorySequence(centerBackAndBoard);
+
+            armExtensionBack.setPower(0.5);
+            armExtensionFront.setPower(0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+            leftFeedServo.setPower(leftFeedOuttake);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+            leftFeedServo.setPower(0.0);
+
+            armExtensionBack.setPower(-0.5);
+            armExtensionFront.setPower(-0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+
+            drive.followTrajectorySequence(centerPark);
+
         }
-        if (duckPos == 0 || duckPos > 210){
-            drive.followTrajectorySequence(right);
+        if (duckPos == 0 || duckPos > 210 && duckID != 1 && duckHeight < 70){
+            angleServo.setPosition(intakeAngle);
+
+            armExtensionFront.setPower(0.5);
+            armExtensionBack.setPower(0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.3)) {}
+
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+            armHeightMotor.setPower(-0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.4)) {}
+
+            armHeightMotor.setPower(0.0);
+            drive.followTrajectorySequence(rightStart);
+
+            rightFeedServo.setPower(rightFeedOuttake);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+
+            rightFeedServo.setPower(0.0);
+            armHeightMotor.setPower(0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.4)) {}
+
+            armHeightMotor.setPower(0.0);
+            angleServo.setPosition(outtakeAngle);
+
+            drive.followTrajectorySequence(rightBackAndBoard);
+
+            armExtensionBack.setPower(0.5);
+            armExtensionFront.setPower(0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+            leftFeedServo.setPower(leftFeedOuttake);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+            leftFeedServo.setPower(0.0);
+
+            armExtensionBack.setPower(-0.5);
+            armExtensionFront.setPower(-0.5);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            armExtensionFront.setPower(0.0);
+            armExtensionBack.setPower(0.0);
+
+            drive.followTrajectorySequence(rightPark);
         }
 
 
