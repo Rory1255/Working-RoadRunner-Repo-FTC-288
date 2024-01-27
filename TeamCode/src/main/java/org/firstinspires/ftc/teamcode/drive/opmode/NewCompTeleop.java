@@ -247,7 +247,7 @@ public class NewCompTeleop extends LinearOpMode {
             }
 
 
-            double airplaneServoOut = 1.0;
+            double airplaneServoOut = 0.0;
             double airplaneServoStop = 0.5;
             double airplanePower = -1.0;
 
@@ -261,9 +261,7 @@ public class NewCompTeleop extends LinearOpMode {
             if (gamepad2.a){
                 airplaneMotor.setPower(airplanePower * 0.90);
             }
-            if (gamepad2.a == false){
-                airplaneMotor.setPower(0.0);
-            }
+
 
             double intakeAngle = 0.4;
             double outtakeAngle = 0.535;

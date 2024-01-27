@@ -133,7 +133,8 @@ public class BlueCloseAuto extends LinearOpMode {
 
         if(isStopRequested()) return;
 
-        if (duckPos < 100 && duckPos >0 && duckID == 2 && duckHeight < 70){
+
+        if (duckPos < 100 && duckPos >0 && duckID == 2){
             angleServo.setPosition(intakeAngle);
 
             armExtensionFront.setPower(0.5);
@@ -185,7 +186,7 @@ public class BlueCloseAuto extends LinearOpMode {
 
             drive.followTrajectorySequence(leftPark);
         }
-        if (duckPos > 100 && duckPos < 210 && duckID == 2 && duckHeight < 70){
+        if (duckPos > 100 && duckPos < 210 && duckID == 2){
 
             angleServo.setPosition(intakeAngle);
 
@@ -239,7 +240,7 @@ public class BlueCloseAuto extends LinearOpMode {
             drive.followTrajectorySequence(centerPark);
 
         }
-        if (duckPos == 0 || duckPos > 210 && duckID != 1 && duckHeight < 70){
+        if (duckPos == 0 || duckPos > 210 && duckID != 1){
             angleServo.setPosition(intakeAngle);
 
             armExtensionFront.setPower(0.5);
