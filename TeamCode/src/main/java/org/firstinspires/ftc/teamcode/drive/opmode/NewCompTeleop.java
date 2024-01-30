@@ -258,13 +258,11 @@ public class NewCompTeleop extends LinearOpMode {
                 airplaneServo.setPosition(airplaneServoStop);
             }
 
-            if (gamepad2.a){
-                airplaneMotor.setPower(airplanePower * 0.90);
-            }
 
 
             double intakeAngle = 0.4;
             double outtakeAngle = 0.535;
+            double outtakeHighAngle = 0.45;
 
 
             if (gamepad2.x){
@@ -272,6 +270,9 @@ public class NewCompTeleop extends LinearOpMode {
             }
             if (gamepad2.b){
                 angleServo.setPosition(outtakeAngle);
+            }
+            if (gamepad2.a){
+                angleServo.setPosition(outtakeHighAngle);
             }
 
 
