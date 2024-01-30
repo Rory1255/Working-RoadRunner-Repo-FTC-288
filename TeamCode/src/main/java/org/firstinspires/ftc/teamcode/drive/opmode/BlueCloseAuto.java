@@ -240,7 +240,7 @@ public class BlueCloseAuto extends LinearOpMode {
             drive.followTrajectorySequence(centerPark);
 
         }
-        if (duckPos == 0 || duckPos > 210 && duckID != 1){
+        if (duckPos == 0 || duckPos > 210){
             angleServo.setPosition(intakeAngle);
 
             armExtensionFront.setPower(0.5);

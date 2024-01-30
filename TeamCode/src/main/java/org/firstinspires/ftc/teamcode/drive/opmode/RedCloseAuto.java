@@ -244,7 +244,7 @@ public class RedCloseAuto extends LinearOpMode {
             drive.followTrajectorySequence(centerPark);
 
         }
-        if (duckPos == 0 || duckPos > 210 && duckID != 2){
+        if (duckPos == 0 || duckPos > 210){
             angleServo.setPosition(intakeAngle);
 
             armExtensionFront.setPower(0.5);
