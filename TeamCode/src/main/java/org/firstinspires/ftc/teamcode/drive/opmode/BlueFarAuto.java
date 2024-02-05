@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Blue Close Auto", group = "LinearOpMode")
+@Autonomous(name = "Blue Far Auto", group = "LinearOpMode")
 public class BlueFarAuto extends LinearOpMode {
     private final int READ_PERIOD = 1;
 
@@ -55,7 +55,7 @@ public class BlueFarAuto extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose = new Pose2d(12, 60, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(-36, 60, Math.toRadians(-90));
 
         drive.setPoseEstimate(startPose);
 
