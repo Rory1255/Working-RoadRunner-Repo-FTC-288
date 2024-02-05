@@ -1,12 +1,14 @@
 package com.example.meepmeeptesting;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
+import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class FarBlueCenter
+public class FarRedCenter
 {
     public static void main(String[] args) {
         // Declare a MeepMeep instance
@@ -17,9 +19,9 @@ public class FarBlueCenter
                 // Required: Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(40, 40, Math.toRadians(180), Math.toRadians(180), 12)
                 // Option: Set theme. Default = ColorSchemeRedDark()
-                .setColorScheme(new ColorSchemeBlueDark())
+                .setColorScheme(new ColorSchemeRedDark())
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(-90)))
+                        drive.trajectorySequenceBuilder(new Pose2d(-36, -60, Math.toRadians(90)))
                                 .waitSeconds(0.1)
                                 .forward(23)
                                 .addDisplacementMarker(()->{
@@ -37,16 +39,16 @@ public class FarBlueCenter
                                 .waitSeconds(0.5)
                                 .forward(-5)
                                 .waitSeconds(0.1)
-                                .strafeRight(15)
+                                .strafeRight(-15)
                                 .waitSeconds(0.1)
-                                .lineToConstantHeading(new Vector2d(-51, 12))
+                                .lineToConstantHeading(new Vector2d(-51, -12))
                                 .waitSeconds(0.1)
-                                .turn(Math.toRadians(90))
+                                .turn(Math.toRadians(-90))
                                 .waitSeconds(0.1)
                                 .forward(98)
                                 .waitSeconds(0.1)
                                 //assuming standard preload procedure is left side yellow, right side purple
-                                .lineToConstantHeading(new Vector2d(47, 33))
+                                .lineToConstantHeading(new Vector2d(47, -33))
                                 .addDisplacementMarker(()->{
                                     //score yellow pixel
                                     //run left servo in outtake mode at medium speed for 0.5 seconds

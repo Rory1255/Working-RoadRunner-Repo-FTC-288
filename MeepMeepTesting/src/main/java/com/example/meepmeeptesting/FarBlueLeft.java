@@ -38,7 +38,7 @@ public class FarBlueLeft
                                 .waitSeconds(0.2)
                                 .lineToConstantHeading(new Vector2d(-36, 12))
                                 .waitSeconds(0.1)
-                                .lineToConstantHeading(new Vector2d(38,12))
+                                .lineToConstantHeading(new Vector2d(47,12))
                                 .waitSeconds(0.2)
                                 //assuming standard preload procedure is left side yellow, right side purple
                                 .lineToConstantHeading(new Vector2d(47, 40))
@@ -51,7 +51,7 @@ public class FarBlueLeft
                                     //raise arm more
                                 })
                                 .waitSeconds(0.2)
-                                .forward(-3)
+                                .forward(-2)
 
                                 .build()
                 );

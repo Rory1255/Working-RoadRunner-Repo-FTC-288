@@ -6,7 +6,7 @@ import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class FarBlueCenter
+public class FarBlueRight
 {
     public static void main(String[] args) {
         // Declare a MeepMeep instance
@@ -22,6 +22,8 @@ public class FarBlueCenter
                         drive.trajectorySequenceBuilder(new Pose2d(-36, 60, Math.toRadians(-90)))
                                 .waitSeconds(0.1)
                                 .forward(23)
+                                .waitSeconds(0.1)
+                                .turn(Math.toRadians(-58))
                                 .addDisplacementMarker(()->{
                                     //Place purple pixel
                                     //Run right servo in outtake mode at very low speed
@@ -34,19 +36,20 @@ public class FarBlueCenter
                                 .addDisplacementMarker(()-> {
                                     //Set intake angle to score position
                                 })
-                                .waitSeconds(0.5)
-                                .forward(-5)
                                 .waitSeconds(0.1)
-                                .strafeRight(15)
+                                .forward(-2)
                                 .waitSeconds(0.1)
-                                .lineToConstantHeading(new Vector2d(-51, 12))
+                                .turn(Math.toRadians(58))
+                                .waitSeconds(0.2)
+                                .forward(26)
                                 .waitSeconds(0.1)
                                 .turn(Math.toRadians(90))
                                 .waitSeconds(0.1)
-                                .forward(98)
-                                .waitSeconds(0.1)
                                 //assuming standard preload procedure is left side yellow, right side purple
-                                .lineToConstantHeading(new Vector2d(47, 33))
+                                .lineToConstantHeading(new Vector2d(47,12))
+                                .waitSeconds(0.2)
+                                //assuming standard preload procedure is left side yellow, right side purple
+                                .lineToConstantHeading(new Vector2d(47, 40))
                                 .addDisplacementMarker(()->{
                                     //score yellow pixel
                                     //run left servo in outtake mode at medium speed for 0.5 seconds
@@ -55,6 +58,7 @@ public class FarBlueCenter
                                 .addDisplacementMarker(()->{
                                     //raise arm more
                                 })
+                                .waitSeconds(0.2)
                                 .forward(-2)
 
                                 .build()
