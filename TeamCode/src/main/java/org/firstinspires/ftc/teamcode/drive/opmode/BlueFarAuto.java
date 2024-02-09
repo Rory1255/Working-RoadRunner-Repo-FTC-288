@@ -68,14 +68,14 @@ public class BlueFarAuto extends LinearOpMode {
                 .waitSeconds(0.1)
                 .strafeRight(15)
                 .waitSeconds(0.1)
-                .lineToConstantHeading(new Vector2d(-51, 12))
+                .lineToConstantHeading(new Vector2d(-51, 10))
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(90))
                 .waitSeconds(0.1)
                 .forward(98)
                 .waitSeconds(0.1)
                 //assuming standard preload procedure is left side yellow, right side purple
-                .lineToConstantHeading(new Vector2d(47, 33))
+                .lineToConstantHeading(new Vector2d(47.5, 31))
                 .build();
 
         TrajectorySequence centerPark = drive.trajectorySequenceBuilder(centerBackAndBoard.end())
@@ -87,17 +87,18 @@ public class BlueFarAuto extends LinearOpMode {
                 .forward(27)
                 .turn(Math.toRadians(90))
                 .waitSeconds(0.1)
-                .forward(-1.3)
+                .forward(-4)
                 .build();
 
         TrajectorySequence leftBackAndBoard = drive.trajectorySequenceBuilder(leftStart.end())
                 .waitSeconds(0.2)
-                .lineToConstantHeading(new Vector2d(-36, 12))
+                .forward(-2)
+                .lineToConstantHeading(new Vector2d(-36, 10))
                 .waitSeconds(0.1)
                 .lineToConstantHeading(new Vector2d(47,12))
                 .waitSeconds(0.2)
                 //assuming standard preload procedure is left side yellow, right side purple
-                .lineToConstantHeading(new Vector2d(47, 40))
+                .lineToConstantHeading(new Vector2d(47, 38))
                 .build();
 
         TrajectorySequence leftPark = drive.trajectorySequenceBuilder(leftBackAndBoard.end())
@@ -116,7 +117,7 @@ public class BlueFarAuto extends LinearOpMode {
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(58))
                 .waitSeconds(0.2)
-                .forward(26)
+                .forward(28)
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(90))
                 .waitSeconds(0.1)
@@ -124,7 +125,7 @@ public class BlueFarAuto extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(47,12))
                 .waitSeconds(0.2)
                 //assuming standard preload procedure is left side yellow, right side purple
-                .lineToConstantHeading(new Vector2d(47, 40))
+                .lineToConstantHeading(new Vector2d(47, 27))
                 .build();
 
         TrajectorySequence rightPark = drive.trajectorySequenceBuilder(rightBackAndBoard.end())

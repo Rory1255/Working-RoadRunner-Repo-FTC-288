@@ -21,6 +21,7 @@ public class RedFarAuto extends LinearOpMode {
 
     private HuskyLens huskyLens;
 
+
     private DcMotor armExtensionFront = null;
     private DcMotor armExtensionBack = null;
     private DcMotor armHeightMotor = null;
@@ -69,14 +70,14 @@ public class RedFarAuto extends LinearOpMode {
                 .waitSeconds(0.1)
                 .strafeRight(-15)
                 .waitSeconds(0.1)
-                .lineToConstantHeading(new Vector2d(-51, -12))
+                .lineToConstantHeading(new Vector2d(-51, -10))
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(-90))
                 .waitSeconds(0.1)
-                .forward(98)
+                .forward(97)
                 .waitSeconds(0.1)
                 //assuming standard preload procedure is left side yellow, right side purple
-                .lineToConstantHeading(new Vector2d(47, -33))
+                .lineToConstantHeading(new Vector2d(46, -33))
                 .build();
 
         TrajectorySequence centerPark = drive.trajectorySequenceBuilder(centerBackAndBoard.end())
@@ -88,22 +89,20 @@ public class RedFarAuto extends LinearOpMode {
                 .forward(27)
                 .turn(Math.toRadians(90))
                 .waitSeconds(0.1)
-                .forward(-1.3)
+                .forward(-2)
                 .build();
 
         TrajectorySequence leftBackAndBoard = drive.trajectorySequenceBuilder(leftStart.end())
-                .forward(-2)
-                .waitSeconds(0.2)
                 .turn(Math.toRadians(-90))
                 .waitSeconds(0.1)
 
-                .forward(26)
+                .forward(28)
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(-90))
                 .waitSeconds(0.1)
                 .forward(81)
                 //assuming standard preload procedure is left side yellow, right side purple
-                .lineToConstantHeading(new Vector2d(47, -30))
+                .lineToConstantHeading(new Vector2d(47, -29))
                 .build();
 
         TrajectorySequence leftPark = drive.trajectorySequenceBuilder(leftBackAndBoard.end())
@@ -115,7 +114,7 @@ public class RedFarAuto extends LinearOpMode {
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(-58))
                 .waitSeconds(0.1)
-                .forward(-5)
+                .forward(-2)
                 .build();
 
         TrajectorySequence rightBackAndBoard = drive.trajectorySequenceBuilder(rightStart.end())
@@ -123,13 +122,13 @@ public class RedFarAuto extends LinearOpMode {
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(58))
                 .waitSeconds(0.1)
-                .lineToConstantHeading(new Vector2d(-38, -12))
+                .lineToConstantHeading(new Vector2d(-38, -10))
                 .waitSeconds(0.1)
                 .turn(Math.toRadians(-90))
-                .lineToConstantHeading(new Vector2d(47,-12))
+                .lineToConstantHeading(new Vector2d(46,-12))
                 .waitSeconds(0.2)
                 //assuming standard preload procedure is left side yellow, right side purple
-                .lineToConstantHeading(new Vector2d(47, -40))
+                .lineToConstantHeading(new Vector2d(46, -40))
                 .build();
 
         TrajectorySequence rightPark = drive.trajectorySequenceBuilder(rightBackAndBoard.end())
