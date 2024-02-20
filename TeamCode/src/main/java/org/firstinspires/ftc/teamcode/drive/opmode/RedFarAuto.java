@@ -188,10 +188,18 @@ public class RedFarAuto extends LinearOpMode {
 
             drive.followTrajectorySequence(leftBackAndBoard);
 
-            armExtensionBack.setPower(0.5);
-            armExtensionFront.setPower(0.5);
+            armHeightMotor.setPower(0.8);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            while (opModeIsActive() && (runtime.seconds() < 0.3)) {}
+
+            armHeightMotor.setPower(0.0);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+
+            armExtensionBack.setPower(0.8);
+            armExtensionFront.setPower(0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 1.3)) {}
 
             armExtensionFront.setPower(0.0);
             armExtensionBack.setPower(0.0);
@@ -200,10 +208,10 @@ public class RedFarAuto extends LinearOpMode {
             while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
             leftFeedServo.setPower(0.0);
 
-            armExtensionBack.setPower(-0.5);
-            armExtensionFront.setPower(-0.5);
+            armExtensionBack.setPower(-0.8);
+            armExtensionFront.setPower(-0.8);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            while (opModeIsActive() && (runtime.seconds() < 1.0)) {}
             armExtensionFront.setPower(0.0);
             armExtensionBack.setPower(0.0);
 
@@ -241,10 +249,18 @@ public class RedFarAuto extends LinearOpMode {
 
             drive.followTrajectorySequence(centerBackAndBoard);
 
-            armExtensionBack.setPower(0.5);
-            armExtensionFront.setPower(0.5);
+            armHeightMotor.setPower(0.8);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            while (opModeIsActive() && (runtime.seconds() < 0.3)) {}
+
+            armHeightMotor.setPower(0.0);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+
+            armExtensionBack.setPower(0.8);
+            armExtensionFront.setPower(0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 1.3)) {}
 
             armExtensionFront.setPower(0.0);
             armExtensionBack.setPower(0.0);
@@ -253,10 +269,10 @@ public class RedFarAuto extends LinearOpMode {
             while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
             leftFeedServo.setPower(0.0);
 
-            armExtensionBack.setPower(-0.5);
-            armExtensionFront.setPower(-0.5);
+            armExtensionBack.setPower(-0.8);
+            armExtensionFront.setPower(-0.8);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            while (opModeIsActive() && (runtime.seconds() < 1.0)) {}
             armExtensionFront.setPower(0.0);
             armExtensionBack.setPower(0.0);
 
@@ -294,10 +310,18 @@ public class RedFarAuto extends LinearOpMode {
 
             drive.followTrajectorySequence(rightBackAndBoard);
 
-            armExtensionBack.setPower(0.5);
-            armExtensionFront.setPower(0.5);
+            armHeightMotor.setPower(0.8);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            while (opModeIsActive() && (runtime.seconds() < 0.3)) {}
+
+            armHeightMotor.setPower(0.0);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
+
+            armExtensionBack.setPower(0.8);
+            armExtensionFront.setPower(0.8);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 1.3)) {}
 
             armExtensionFront.setPower(0.0);
             armExtensionBack.setPower(0.0);
@@ -306,10 +330,10 @@ public class RedFarAuto extends LinearOpMode {
             while (opModeIsActive() && (runtime.seconds() < 0.5)) {}
             leftFeedServo.setPower(0.0);
 
-            armExtensionBack.setPower(-0.5);
-            armExtensionFront.setPower(-0.5);
+            armExtensionBack.setPower(-0.8);
+            armExtensionFront.setPower(-0.8);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 0.6)) {}
+            while (opModeIsActive() && (runtime.seconds() < 1.0)) {}
             armExtensionFront.setPower(0.0);
             armExtensionBack.setPower(0.0);
 
