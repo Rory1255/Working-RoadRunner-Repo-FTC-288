@@ -145,13 +145,13 @@ public class NewCompTeleop extends LinearOpMode {
 
             //logic to reduce speed of robot when left trigger is pressed and return to full speed when released
             if (gamepad1.left_trigger > 0.000) {
-                movementX = movementX * 0.45;
-                movementY = movementY * 0.45;
+                movementX = movementX * gamepad1.left_trigger;
+                movementY = movementY * gamepad1.left_trigger;
                 yaw = yaw * 0.45;
             }
             if (gamepad1.left_trigger > 0.000 && gamepad1.left_trigger < 0.001) {
-                movementX = movementX / 0.45;
-                movementY = movementY / 0.45;
+                movementX = movementX / gamepad1.left_trigger;
+                movementY = movementY / gamepad1.left_trigger;
                 yaw = yaw / 0.45;
             }
 
@@ -209,7 +209,6 @@ public class NewCompTeleop extends LinearOpMode {
             }
 
 
-
             //left feed variables
 
             double leftFeedIntake = 1.0;
@@ -247,8 +246,8 @@ public class NewCompTeleop extends LinearOpMode {
             }
 
 
-            double airplaneServoOut = 0.0;
-            double airplaneServoStop = 0.5;
+            double airplaneServoOut = 0.5;
+            double airplaneServoStop = 0.0;
             double airplanePower = -1.0;
 
             if (gamepad2.dpad_up){
