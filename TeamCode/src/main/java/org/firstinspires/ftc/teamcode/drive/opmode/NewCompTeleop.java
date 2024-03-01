@@ -143,23 +143,23 @@ public class NewCompTeleop extends LinearOpMode {
             double movementX = joystickMovementX * cos(toRadians(theta)) - joystickMovementY * sin(toRadians(theta));
             double movementY = joystickMovementX * sin(toRadians(theta)) + joystickMovementY * cos(toRadians(theta));
 
-            //logic to reduce speed of robot when left trigger is pressed and return to full speed when released
+            //logic to increase speed of robot when left trigger is pressed and return to original speed when released
             if (gamepad1.left_trigger > 0.000) {
-                movementX = movementX * (1 - gamepad1.left_trigger + 0.2);
-                movementY = movementY * (1 - gamepad1.left_trigger + 0.2);
-                yaw = yaw * 0.45;
+                movementX = movementX * (2.5 * gamepad1.left_trigger);
+                movementY = movementY * (2.5 * gamepad1.left_trigger);
+                yaw = yaw * (2.5 * gamepad1.left_trigger);
             }
             if (gamepad1.left_trigger > 0.000 && gamepad1.left_trigger < 0.001) {
-                movementX = movementX / (1 - gamepad1.left_trigger + 0.2);
-                movementY = movementY / (1 - gamepad1.left_trigger + 0.2);
-                yaw = yaw / 0.45;
+                movementX = movementX / (2.5 * gamepad1.left_trigger);
+                movementY = movementY / (2.5 * gamepad1.left_trigger);
+                yaw = yaw / (2.5 * gamepad1.left_trigger);
             }
 
             //set power variables for Mecanum wheels
-            double leftFrontPower = (movementY + movementX + yaw);
-            double rightFrontPower = (movementY - movementX - yaw);
-            double leftBackPower = (movementY - movementX + yaw);
-            double rightBackPower = (movementY + movementX - yaw);
+            double leftFrontPower = (movementY + movementX + yaw) * 0.45;
+            double rightFrontPower = (movementY - movementX - yaw) * 0.45;
+            double leftBackPower = (movementY - movementX + yaw) * 0.45;
+            double rightBackPower = (movementY + movementX - yaw) * 0.45;
 
             //normalize power variables to prevent motor power from exceeding 1.0
             double maxPower = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
