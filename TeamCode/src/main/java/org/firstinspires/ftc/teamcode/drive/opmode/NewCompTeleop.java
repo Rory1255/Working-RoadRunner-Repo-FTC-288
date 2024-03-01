@@ -145,13 +145,13 @@ public class NewCompTeleop extends LinearOpMode {
 
             //logic to reduce speed of robot when left trigger is pressed and return to full speed when released
             if (gamepad1.left_trigger > 0.000) {
-                movementX = movementX * gamepad1.left_trigger;
-                movementY = movementY * gamepad1.left_trigger;
+                movementX = movementX * (1 - gamepad1.left_trigger + 0.2);
+                movementY = movementY * (1 - gamepad1.left_trigger + 0.2);
                 yaw = yaw * 0.45;
             }
             if (gamepad1.left_trigger > 0.000 && gamepad1.left_trigger < 0.001) {
-                movementX = movementX / gamepad1.left_trigger;
-                movementY = movementY / gamepad1.left_trigger;
+                movementX = movementX / (1 - gamepad1.left_trigger + 0.2);
+                movementY = movementY / (1 - gamepad1.left_trigger + 0.2);
                 yaw = yaw / 0.45;
             }
 
